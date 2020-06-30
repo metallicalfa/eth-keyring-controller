@@ -1,6 +1,6 @@
 {
-  "name": "eth-keyring-controller",
-  "version": "6.0.0",
+  "name": "@rathishubham017/eth-keyring-controller",
+  "version": "1.0.0",
   "description": "A module for managing various keyrings of Ethereum accounts, encrypting them, and using them.",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/MetaMask/KeyringController.git"
+    "url": "git+ssh://git@github.com/rathishubham7/eth-keyring-controller"
   },
   "keywords": [
     "ethereum",
@@ -18,7 +18,7 @@
     "accounts",
     "keys"
   ],
-  "author": "Dan Finlay <dan@danfinlay.com>",
+  "author": "Shubham Rathi <rathishubham017@gmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/MetaMask/KeyringController/issues"

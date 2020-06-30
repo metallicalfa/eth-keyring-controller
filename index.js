@@ -120,6 +120,48 @@ class KeyringController extends EventEmitter {
       .then(this.fullUpdate.bind(this))
   }
 
+
+  /**
+   * createNewTorusVaultAndRestore
+   *
+   * Destroys any old encrypted storage,
+   * creates a new encrypted store with the given password,
+   * creates a new HD wallet from the given seed with 1 account.
+   *
+   * @emits KeyringController#unlock
+   * @param {string} password - The password to encrypt the vault with
+   * @param {string} privateKey - eth private key.
+   * @returns {Promise<Object>} A Promise that resolves to the state.
+   */
+  createNewTorusVaultAndRestore (password, privateKey) {
+    if (typeof password !== 'string') {
+      return Promise.reject(new Error('Password must be text.'))
+    }
+
+    // if (!bip39.validateMnemonic(seed)) {
+    //   return Promise.reject(new Error('Seed phrase is invalid.'))
+    // }
+
+    this.clearKeyrings()
+
+    return this.persistAllKeyrings(password)
+      .then(() => {
+        return this.addNewKeyring('Simple Key Pair', [privateKey])
+      })
+      .then((firstKeyring) => {
+        return firstKeyring.getAccounts()
+      })
+      .then(([firstAccount]) => {
+        if (!firstAccount) {
+          throw new Error('KeyringController - First Account not found.')
+        }
+        return null
+      })
+      .then(this.persistAllKeyrings.bind(this, password))
+      .then(this.setUnlocked.bind(this))
+      .then(this.fullUpdate.bind(this))
+  }
+
   /**
    * Set Locked
    * This method deallocates all secrets, and effectively locks MetaMask.
